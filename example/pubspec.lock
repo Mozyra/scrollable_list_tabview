@@ -94,14 +94,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.5"
+    version: "0.1.6"
   scrollable_positioned_list:
     dependency: transitive
     description:
       name: scrollable_positioned_list
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.8"
+    version: "0.1.9"
   sky_engine:
     dependency: transitive
     description: flutter
