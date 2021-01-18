@@ -20,6 +20,7 @@ class ScrollableListTabView extends StatefulWidget {
       {Key key,
       this.tabs,
       this.tabHeight = kToolbarHeight,
+      this.withLabel = false,
       this.tabAnimationDuration = _kScrollDuration,
       this.bodyAnimationDuration = _kScrollDuration,
       this.tabAnimationCurve = Curves.decelerate,
@@ -35,6 +36,8 @@ class ScrollableListTabView extends StatefulWidget {
 
   /// Height of the tab at the top of the view.
   final double tabHeight;
+
+  final bool withLabel;
 
   /// Duration of tab change animation.
   final Duration tabAnimationDuration;
@@ -128,10 +131,11 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
-                  child: _buildInnerTab(index),
-                ),
+                if (widget.withLabel)
+                  Padding(
+                    padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
+                    child: _buildInnerTab(index),
+                  ),
                 Flexible(
                   child: widget.tabs[index].body,
                 )
