@@ -94,14 +94,16 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.6"
+    version: "0.2.1"
   scrollable_positioned_list:
     dependency: transitive
     description:
-      name: scrollable_positioned_list
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.9"
+      path: "packages/scrollable_positioned_list"
+      ref: "bugfix/173"
+      resolved-ref: bd21174d9cc50417c313bab031b469e12fb2e083
+      url: "https://github.com/mig35/flutter.widgets"
+    source: git
+    version: "0.1.7"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         tabHeight: 48,
         bodyAnimationDuration: const Duration(milliseconds: 150),
         tabAnimationCurve: Curves.easeOut,
+        withLabel: false,
         tabAnimationDuration: const Duration(milliseconds: 200),
         tabs: [
           ScrollableListTab(
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => ListTile(
                   leading: Container(
                     height: 40,
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => Card(
                   child: Center(child: Text('Card element $index')),
                 ),
@@ -86,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => Card(
                   child: Center(child: Text('Card element $index')),
                 ),
@@ -96,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => ListTile(
                   leading: Container(
                     height: 40,
@@ -114,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => ListTile(
                   leading: Container(
                     height: 40,
@@ -134,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => Card(
                   child: Center(child: Text('Card element $index')),
                 ),
@@ -149,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => Card(
                   child: Center(child: Text('Card element $index')),
                 ),
@@ -159,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 2,
                 itemBuilder: (_, index) => ListTile(
                   leading: Container(
                     height: 40,

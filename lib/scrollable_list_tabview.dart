@@ -21,10 +21,15 @@ class ScrollableListTabView extends StatefulWidget {
       this.tabs,
       this.tabHeight = kToolbarHeight,
       this.withLabel = false,
+      this.selectedDecoration = const BoxDecoration(color: Colors.black12),
+      this.unselectedDecoration = const BoxDecoration(),
+      this.padding = const EdgeInsets.all(0),
       this.tabAnimationDuration = _kScrollDuration,
       this.bodyAnimationDuration = _kScrollDuration,
       this.tabAnimationCurve = Curves.decelerate,
-      this.bodyAnimationCurve = Curves.decelerate})
+      this.bodyAnimationCurve = Curves.decelerate,
+      this.tabOpacityAnimationWeights = const [20, 20, 60],
+      this.bodyOpacityAnimationWeights = const [20, 20, 60]})
       : assert(tabAnimationDuration != null, bodyAnimationDuration != null),
         assert(tabAnimationCurve != null, bodyAnimationCurve != null),
         assert(tabHeight != null),
@@ -48,8 +53,19 @@ class ScrollableListTabView extends StatefulWidget {
   /// Animation curve used when animating tab change.
   final Curve tabAnimationCurve;
 
+  final EdgeInsets padding;
+
+  final BoxDecoration selectedDecoration;
+
+  final BoxDecoration unselectedDecoration;
+
   /// Animation curve used when changing index of inner [ScrollView]s.
   final Curve bodyAnimationCurve;
+
+  /// See more information in [ItemScrollController.scrollTo(opacityAnimationWeights)]
+  final List<double> tabOpacityAnimationWeights;
+
+  final List<double> bodyOpacityAnimationWeights;
 
   @override
   _ScrollableListTabViewState createState() => _ScrollableListTabViewState();
@@ -79,43 +95,35 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           child: ScrollablePositionedList.builder(
             itemCount: widget.tabs.length,
             scrollDirection: Axis.horizontal,
+            physics: ClampingScrollPhysics(),
             itemScrollController: _tabScrollController,
-            padding: EdgeInsets.symmetric(vertical: 2.5),
+            padding: widget.padding,
             itemBuilder: (context, index) {
-              var tab = widget.tabs[index].tab;
               return ValueListenableBuilder<int>(
                   valueListenable: _index,
                   builder: (_, i, __) {
                     var selected = index == i;
-                    var borderColor = selected
-                        ? tab.activeBackgroundColor
-                        : Theme.of(context).dividerColor;
-                    return Container(
-                      height: 32,
-                      margin: _kTabMargin,
-                      decoration: BoxDecoration(
-                          color: selected
-                              ? tab.activeBackgroundColor
-                              : tab.inactiveBackgroundColor,
-                          borderRadius: tab.borderRadius),
-                      child: OutlinedButton(
-                        style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all(
-                                selected ? Colors.white : Colors.grey),
-                            backgroundColor: MaterialStateProperty.all(selected
-                                ? tab.activeBackgroundColor
-                                : tab.inactiveBackgroundColor),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            side: MaterialStateProperty.all(BorderSide(
-                              width: 1,
-                              color: borderColor,
-                            )),
-                            elevation: MaterialStateProperty.all(0),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: tab.borderRadius))),
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        final lastIndexOnScreen = _bodyPositionsListener
+                                .itemPositions.value.last.index ==
+                            _index.value;
+                        _onTabPressed(
+                            index: index, lastIndexOnScreen: lastIndexOnScreen);
+                      },
+                      child: Container(
+                        height: 32,
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        margin: _kTabMargin,
+                        decoration: selected
+                            ? widget.selectedDecoration
+                            : widget.unselectedDecoration,
+                        // color: selected
+                        //     ? tab.activeBackgroundColor
+                        //     : tab.inactiveBackgroundColor,
+                        // borderRadius: tab.borderRadius),
                         child: _buildTab(index),
-                        onPressed: () => _onTabPressed(index),
                       ),
                     );
                   });
@@ -126,6 +134,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           child: ScrollablePositionedList.builder(
             itemScrollController: _bodyScrollController,
             itemPositionsListener: _bodyPositionsListener,
+            physics: ClampingScrollPhysics(),
             itemCount: widget.tabs.length,
             itemBuilder: (_, index) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,6 +208,16 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
 
     /// A new index has been detected.
     await _handleTabScroll(firstIndex);
+
+    // final firstIndex = _bodyPositionsListener.itemPositions.value.first.index;
+    // final lastIndex = _bodyPositionsListener.itemPositions.value.last.index;
+    // final lastIndexOnScreen =
+    //     _bodyPositionsListener.itemPositions.value.last.index == _index.value;
+    // if ((_index.value == firstIndex) ||
+    //     lastIndexOnScreen && (_index.value == lastIndex)) return;
+    //
+    // /// A new index has been detected.
+    // await _handleTabScroll(lastIndex);
   }
 
   Future<void> _handleTabScroll(int index) async {
@@ -207,19 +226,24 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
         index: _index.value,
         duration: widget.tabAnimationDuration,
         curve: widget.tabAnimationCurve);
+    //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
   }
 
   /// When a new tab has been pressed both [_tabScrollController] and
   /// [_bodyScrollController] should notify their views.
-  void _onTabPressed(int index) async {
+  void _onTabPressed(
+      {@required int index, @required bool lastIndexOnScreen}) async {
     await _tabScrollController.scrollTo(
         index: index,
         duration: widget.tabAnimationDuration,
         curve: widget.tabAnimationCurve);
+    //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
     await _bodyScrollController.scrollTo(
         index: index,
+        //alignment: !lastIndexOnScreen ? 0 : -0.2,
         duration: widget.bodyAnimationDuration,
         curve: widget.bodyAnimationCurve);
+    //opacityAnimationWeights: widget.bodyOpacityAnimationWeights);
     _index.value = index;
   }
 
