@@ -7,6 +7,7 @@ class ListTab {
       this.icon,
       @required this.label,
       this.borderRadius = const BorderRadius.all(const Radius.circular(5.0)),
+      @required this.inactiveLabel,
       this.activeBackgroundColor = Colors.blue,
       this.inactiveBackgroundColor = Colors.transparent,
       this.showIconOnList = false,
@@ -27,6 +28,8 @@ class ListTab {
   /// [BorderRadius] for the a tab at the bottom tab view.
   /// This won't affect the tab in the scrollable list.
   final BorderRadiusGeometry borderRadius;
+
+  final Widget inactiveLabel;
 
   /// Color to be used when the tab is selected.
   final Color activeBackgroundColor;

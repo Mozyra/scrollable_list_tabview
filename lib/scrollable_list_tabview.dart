@@ -123,7 +123,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
                         //     ? tab.activeBackgroundColor
                         //     : tab.inactiveBackgroundColor,
                         // borderRadius: tab.borderRadius),
-                        child: _buildTab(index),
+                        child: _buildTab(index, selected),
                       ),
                     );
                   });
@@ -183,14 +183,18 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
     );
   }
 
-  Widget _buildTab(int index) {
+  Widget _buildTab(int index, bool selected) {
     var tab = widget.tabs[index].tab;
-    if (tab.icon == null) return tab.label;
+    if (tab.icon == null) return selected ? tab.label : tab.inactiveLabel;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
-      children: [tab.icon, _kSizedBoxW8, tab.label],
+      children: [
+        tab.icon,
+        _kSizedBoxW8,
+        selected ? tab.label : tab.inactiveLabel
+      ],
     );
   }
 
