@@ -28,6 +28,7 @@ class ScrollableListTabView extends StatefulWidget {
       this.bodyAnimationDuration = _kScrollDuration,
       this.tabAnimationCurve = Curves.decelerate,
       this.bodyAnimationCurve = Curves.decelerate,
+      this.isJump = true,
       this.tabOpacityAnimationWeights = const [20, 20, 60],
       this.bodyOpacityAnimationWeights = const [20, 20, 60]})
       : assert(tabAnimationDuration != null, bodyAnimationDuration != null),
@@ -43,6 +44,8 @@ class ScrollableListTabView extends StatefulWidget {
   final double tabHeight;
 
   final bool withLabel;
+
+  final bool isJump;
 
   /// Duration of tab change animation.
   final Duration tabAnimationDuration;
@@ -226,29 +229,40 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
 
   Future<void> _handleTabScroll(int index) async {
     _index.value = index;
-    await _tabScrollController.scrollTo(
-        index: _index.value,
-        duration: widget.tabAnimationDuration,
-        curve: widget.tabAnimationCurve);
-    //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
+    if (widget.isJump) {
+      _tabScrollController.jumpTo(index: _index.value);
+    } else {
+      await _tabScrollController.scrollTo(
+          index: _index.value,
+          duration: widget.tabAnimationDuration,
+          curve: widget.tabAnimationCurve);
+      //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
+    }
+    return;
   }
 
   /// When a new tab has been pressed both [_tabScrollController] and
   /// [_bodyScrollController] should notify their views.
   void _onTabPressed(
       {@required int index, @required bool lastIndexOnScreen}) async {
-    await _tabScrollController.scrollTo(
-        index: index,
-        duration: widget.tabAnimationDuration,
-        curve: widget.tabAnimationCurve);
-    //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
-    await _bodyScrollController.scrollTo(
-        index: index,
-        //alignment: !lastIndexOnScreen ? 0 : -0.2,
-        duration: widget.bodyAnimationDuration,
-        curve: widget.bodyAnimationCurve);
-    //opacityAnimationWeights: widget.bodyOpacityAnimationWeights);
+    if (widget.isJump) {
+      _tabScrollController.jumpTo(index: index);
+      _bodyScrollController.jumpTo(index: index);
+    } else {
+      await _tabScrollController.scrollTo(
+          index: index,
+          duration: widget.tabAnimationDuration,
+          curve: widget.tabAnimationCurve);
+      //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
+      await _bodyScrollController.scrollTo(
+          index: index,
+          //alignment: !lastIndexOnScreen ? 0 : -0.2,
+          duration: widget.bodyAnimationDuration,
+          curve: widget.bodyAnimationCurve);
+      //opacityAnimationWeights: widget.bodyOpacityAnimationWeights);
+    }
     _index.value = index;
+    return;
   }
 
   @override
