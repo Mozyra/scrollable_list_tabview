@@ -225,8 +225,8 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
     await _tabScrollController.scrollTo(
         index: _index.value,
         duration: widget.tabAnimationDuration,
-        curve: widget.tabAnimationCurve);
-    //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
+        curve: widget.tabAnimationCurve,
+        opacityAnimationWeights: widget.tabOpacityAnimationWeights);
   }
 
   /// When a new tab has been pressed both [_tabScrollController] and
@@ -236,14 +236,14 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
     await _tabScrollController.scrollTo(
         index: index,
         duration: widget.tabAnimationDuration,
-        curve: widget.tabAnimationCurve);
-    //opacityAnimationWeights: widget.tabOpacityAnimationWeights);
+        curve: widget.tabAnimationCurve,
+        opacityAnimationWeights: widget.tabOpacityAnimationWeights);
     await _bodyScrollController.scrollTo(
         index: index,
         //alignment: !lastIndexOnScreen ? 0 : -0.2,
         duration: widget.bodyAnimationDuration,
-        curve: widget.bodyAnimationCurve);
-    //opacityAnimationWeights: widget.bodyOpacityAnimationWeights);
+        curve: widget.bodyAnimationCurve,
+        opacityAnimationWeights: widget.bodyOpacityAnimationWeights);
     _index.value = index;
   }
 
