@@ -9,8 +9,6 @@ export 'model/list_tab.dart';
 export 'model/scrollable_list_tab.dart';
 
 const Duration _kScrollDuration = const Duration(milliseconds: 150);
-const EdgeInsetsGeometry _kTabMargin =
-    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0);
 
 const SizedBox _kSizedBoxW8 = const SizedBox(width: 8.0);
 
@@ -29,6 +27,8 @@ class ScrollableListTabView extends StatefulWidget {
       this.tabAnimationCurve = Curves.decelerate,
       this.bodyAnimationCurve = Curves.decelerate,
       this.isJump = true,
+      this.tabMargin =
+          const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       this.tabOpacityAnimationWeights = const [20, 20, 60],
       this.bodyOpacityAnimationWeights = const [20, 20, 60]})
       : assert(tabAnimationDuration != null, bodyAnimationDuration != null),
@@ -46,6 +46,8 @@ class ScrollableListTabView extends StatefulWidget {
   final bool withLabel;
 
   final bool isJump;
+
+  final EdgeInsetsGeometry tabMargin;
 
   /// Duration of tab change animation.
   final Duration tabAnimationDuration;
@@ -118,7 +120,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
                       child: Container(
                         height: 32,
                         padding: EdgeInsets.symmetric(horizontal: 8),
-                        margin: _kTabMargin,
+                        margin: widget.tabMargin,
                         decoration: selected
                             ? widget.selectedDecoration
                             : widget.unselectedDecoration,
@@ -145,7 +147,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
               children: [
                 if (widget.withLabel)
                   Padding(
-                    padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
+                    padding: widget.tabMargin.add(const EdgeInsets.all(5.0)),
                     child: _buildInnerTab(index),
                   ),
                 Flexible(
