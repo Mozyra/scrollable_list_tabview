@@ -94,47 +94,45 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: widget.tabHeight,
-          color: Theme.of(context).cardColor,
-          child: ScrollablePositionedList.builder(
-            itemCount: widget.tabs.length,
-            scrollDirection: Axis.horizontal,
-            physics: ClampingScrollPhysics(),
-            itemScrollController: _tabScrollController,
-            padding: widget.padding,
-            itemBuilder: (context, index) {
-              return ValueListenableBuilder<int>(
-                  valueListenable: _index,
-                  builder: (_, i, __) {
-                    var selected = index == i;
-                    return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        final lastIndexOnScreen = _bodyPositionsListener
-                                .itemPositions.value.last.index ==
-                            _index.value;
-                        _onTabPressed(
-                            index: index, lastIndexOnScreen: lastIndexOnScreen);
-                      },
-                      child: Container(
-                        height: 32,
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        margin: widget.tabMargin,
-                        decoration: selected
-                            ? widget.selectedDecoration
-                            : widget.unselectedDecoration,
-                        // color: selected
-                        //     ? tab.activeBackgroundColor
-                        //     : tab.inactiveBackgroundColor,
-                        // borderRadius: tab.borderRadius),
-                        child: _buildTab(index, selected),
-                      ),
-                    );
-                  });
-            },
+        if (widget.tabs.length > 1)
+          Container(
+            height: widget.tabHeight,
+            color: Theme.of(context).cardColor,
+            child: ScrollablePositionedList.builder(
+              itemCount: widget.tabs.length,
+              scrollDirection: Axis.horizontal,
+              physics: ClampingScrollPhysics(),
+              itemScrollController: _tabScrollController,
+              padding: widget.padding,
+              itemBuilder: (context, index) {
+                return ValueListenableBuilder<int>(
+                    valueListenable: _index,
+                    builder: (_, i, __) {
+                      var selected = index == i;
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          final lastIndexOnScreen = _bodyPositionsListener
+                                  .itemPositions.value.last.index ==
+                              _index.value;
+                          _onTabPressed(
+                              index: index,
+                              lastIndexOnScreen: lastIndexOnScreen);
+                        },
+                        child: Container(
+                          height: 32,
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          margin: widget.tabMargin,
+                          decoration: selected
+                              ? widget.selectedDecoration
+                              : widget.unselectedDecoration,
+                          child: _buildTab(index, selected),
+                        ),
+                      );
+                    });
+              },
+            ),
           ),
-        ),
         Expanded(
           child: ScrollablePositionedList.builder(
             itemScrollController: _bodyScrollController,
