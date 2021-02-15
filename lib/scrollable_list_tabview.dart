@@ -230,7 +230,9 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
   Future<void> _handleTabScroll(int index) async {
     _index.value = index;
     if (widget.isJump) {
-      _tabScrollController.jumpTo(index: _index.value);
+      _tabScrollController.jumpTo(
+          index: _index.value,
+          alignment: index < widget.tabs.length / 2 ? 0 : 1);
     } else {
       await _tabScrollController.scrollTo(
           index: _index.value,
@@ -246,7 +248,8 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
   void _onTabPressed(
       {@required int index, @required bool lastIndexOnScreen}) async {
     if (widget.isJump) {
-      _tabScrollController.jumpTo(index: index);
+      _tabScrollController.jumpTo(
+          index: index, alignment: index < widget.tabs.length / 2 ? 0 : 1);
       _bodyScrollController.jumpTo(index: index);
     } else {
       await _tabScrollController.scrollTo(
