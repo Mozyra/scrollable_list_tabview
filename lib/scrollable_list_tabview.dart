@@ -252,6 +252,8 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
       if (currentItem != null) {
         final centerAlignment = 0.5 -
             (currentItem.itemTrailingEdge - currentItem.itemLeadingEdge) / 2;
+        final endAlignment =
+            1 - (currentItem.itemTrailingEdge - currentItem.itemLeadingEdge);
         final haveFirst = itemPositions.first.index == 0;
         final haveLast = itemPositions.last.index == widget.tabs.length - 1;
         double alignment;
@@ -278,11 +280,28 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           }
           alignment = centerAlignment;
         } else {
-          alignment = centerAlignment;
+          if (itemPositions.first.index == widget.tabs.length - 1) {
+            alignment = endAlignment;
+          } else if (itemPositions.last.index == 0) {
+            if (index == 0 && currentItem.index == 0) {
+              alignment = 0;
+            } else {
+              alignment = centerAlignment;
+            }
+          } else {
+            alignment = centerAlignment;
+          }
+          //alignment = centerAlignment;
         }
         _tabScrollController.jumpTo(index: _index.value, alignment: alignment);
       } else {
-        _tabScrollController.jumpTo(index: _index.value, alignment: 0.33);
+        _tabScrollController.jumpTo(
+            index: _index.value,
+            alignment: index <= widget.tabs.length / 2
+                ? 0
+                : 1 -
+                    (itemPositions.last.itemTrailingEdge -
+                        itemPositions.last.itemLeadingEdge));
       }
     } else {
       await _tabScrollController.scrollTo(
