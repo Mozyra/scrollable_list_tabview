@@ -1,5 +1,7 @@
 library scrollable_list_tabview;
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -112,7 +114,9 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
               itemPositionsListener: _tabPositionsListener,
               itemCount: widget.tabs.length,
               scrollDirection: Axis.horizontal,
-              physics: ClampingScrollPhysics(),
+              physics: Platform.isAndroid
+                  ? ClampingScrollPhysics()
+                  : BouncingScrollPhysics(),
               itemScrollController: _tabScrollController,
               padding: widget.padding,
               itemBuilder: (context, index) {
@@ -148,7 +152,9 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           child: ScrollablePositionedList.builder(
             itemScrollController: _bodyScrollController,
             itemPositionsListener: _bodyPositionsListener,
-            physics: ClampingScrollPhysics(),
+            physics: Platform.isAndroid
+                ? ClampingScrollPhysics()
+                : BouncingScrollPhysics(),
             itemCount: widget.tabs.length,
             itemBuilder: (_, index) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
