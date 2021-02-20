@@ -104,48 +104,66 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
 
   @override
   Widget build(BuildContext context) {
+    Shader shaderCallback(rect) {
+      return LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Colors.white.withOpacity(1),
+          Colors.white.withOpacity(0),
+          Colors.white.withOpacity(0),
+          Colors.white.withOpacity(1),
+        ],
+        stops: [0.0, 0.05, 0.95, 1.0],
+      ).createShader(rect);
+    }
+
     return Column(
       children: [
         if (widget.tabs.length > 1)
           Container(
             height: widget.tabHeight,
             color: Theme.of(context).cardColor,
-            child: ScrollablePositionedList.builder(
-              itemPositionsListener: _tabPositionsListener,
-              itemCount: widget.tabs.length,
-              scrollDirection: Axis.horizontal,
-              physics: Platform.isAndroid
-                  ? ClampingScrollPhysics()
-                  : BouncingScrollPhysics(),
-              itemScrollController: _tabScrollController,
-              padding: widget.padding,
-              itemBuilder: (context, index) {
-                return ValueListenableBuilder<int>(
-                    valueListenable: _index,
-                    builder: (_, i, __) {
-                      var selected = index == i;
-                      return GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          final lastIndexOnScreen = _bodyPositionsListener
-                                  .itemPositions.value.last.index ==
-                              _index.value;
-                          _onTabPressed(
-                              index: index,
-                              lastIndexOnScreen: lastIndexOnScreen);
-                        },
-                        child: Container(
-                          height: 32,
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          margin: widget.tabMargin,
-                          decoration: selected
-                              ? widget.selectedDecoration
-                              : widget.unselectedDecoration,
-                          child: _buildTab(index, selected),
-                        ),
-                      );
-                    });
-              },
+            child: ShaderMask(
+              shaderCallback: shaderCallback,
+              blendMode: BlendMode.difference,
+              child: ScrollablePositionedList.builder(
+                itemPositionsListener: _tabPositionsListener,
+                itemCount: widget.tabs.length,
+                scrollDirection: Axis.horizontal,
+                physics: Platform.isAndroid
+                    ? ClampingScrollPhysics()
+                    : BouncingScrollPhysics(),
+                itemScrollController: _tabScrollController,
+                padding: widget.padding,
+                itemBuilder: (context, index) {
+                  return ValueListenableBuilder<int>(
+                      valueListenable: _index,
+                      builder: (_, i, __) {
+                        var selected = index == i;
+                        return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            final lastIndexOnScreen = _bodyPositionsListener
+                                    .itemPositions.value.last.index ==
+                                _index.value;
+                            _onTabPressed(
+                                index: index,
+                                lastIndexOnScreen: lastIndexOnScreen);
+                          },
+                          child: Container(
+                            height: 32,
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            margin: widget.tabMargin,
+                            decoration: selected
+                                ? widget.selectedDecoration
+                                : widget.unselectedDecoration,
+                            child: _buildTab(index, selected),
+                          ),
+                        );
+                      });
+                },
+              ),
             ),
           ),
         Expanded(
