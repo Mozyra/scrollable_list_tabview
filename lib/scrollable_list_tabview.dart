@@ -21,7 +21,7 @@ class ScrollableListTabView extends StatefulWidget {
       this.tabs,
       this.tabHeight = kToolbarHeight,
       this.withLabel = false,
-      this.selectedDecoration = const BoxDecoration(color: Colors.black12),
+      this.selectedDecoration = const BoxDecoration(color: Colors.black),
       this.unselectedDecoration = const BoxDecoration(),
       this.padding = const EdgeInsets.all(0),
       this.tabAnimationDuration = _kScrollDuration,
@@ -113,7 +113,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           Colors.white.withOpacity(0),
           Colors.white,
         ],
-        stops: [0.0, 0.05, 0.95, 1.0],
+        stops: [0.015, 0.06, 0.94, 0.9850],
       ).createShader(rect);
     }
 
@@ -125,7 +125,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
             color: Theme.of(context).cardColor,
             child: ShaderMask(
               shaderCallback: shaderCallback,
-              blendMode: BlendMode.overlay,
+              blendMode: BlendMode.exclusion,
               child: ScrollablePositionedList.builder(
                 itemPositionsListener: _tabPositionsListener,
                 itemCount: widget.tabs.length,
@@ -140,24 +140,29 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
                       valueListenable: _index,
                       builder: (_, i, __) {
                         var selected = index == i;
-                        return GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            final lastIndexOnScreen = _bodyPositionsListener
-                                    .itemPositions.value.last.index ==
-                                _index.value;
-                            _onTabPressed(
-                                index: index,
-                                lastIndexOnScreen: lastIndexOnScreen);
-                          },
-                          child: Container(
-                            height: 32,
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            margin: widget.tabMargin,
-                            decoration: selected
-                                ? widget.selectedDecoration
-                                : widget.unselectedDecoration,
-                            child: _buildTab(index, selected),
+                        return Container(
+                          margin: EdgeInsets.only(
+                              left: index == 0 ? 12 : 0,
+                              right: index == widget.tabs.length - 1 ? 12 : 0),
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              final lastIndexOnScreen = _bodyPositionsListener
+                                      .itemPositions.value.last.index ==
+                                  _index.value;
+                              _onTabPressed(
+                                  index: index,
+                                  lastIndexOnScreen: lastIndexOnScreen);
+                            },
+                            child: Container(
+                              height: 32,
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              margin: widget.tabMargin,
+                              decoration: selected
+                                  ? widget.selectedDecoration
+                                  : widget.unselectedDecoration,
+                              child: _buildTab(index, selected),
+                            ),
                           ),
                         );
                       });
