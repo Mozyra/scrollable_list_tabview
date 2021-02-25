@@ -87,7 +87,6 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
   final ItemPositionsListener _tabPositionsListener =
       ItemPositionsListener.create();
   final ItemScrollController _tabScrollController = ItemScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -109,10 +108,10 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: [
-          Colors.white.withOpacity(1),
+          Colors.white,
           Colors.white.withOpacity(0),
           Colors.white.withOpacity(0),
-          Colors.white.withOpacity(1),
+          Colors.white,
         ],
         stops: [0.0, 0.05, 0.95, 1.0],
       ).createShader(rect);
@@ -126,7 +125,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
             color: Theme.of(context).cardColor,
             child: ShaderMask(
               shaderCallback: shaderCallback,
-              blendMode: BlendMode.difference,
+              blendMode: BlendMode.overlay,
               child: ScrollablePositionedList.builder(
                 itemPositionsListener: _tabPositionsListener,
                 itemCount: widget.tabs.length,
@@ -251,16 +250,6 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
 
     /// A new index has been detected.
     await _handleTabScroll(firstIndex);
-
-    // final firstIndex = _bodyPositionsListener.itemPositions.value.first.index;
-    // final lastIndex = _bodyPositionsListener.itemPositions.value.last.index;
-    // final lastIndexOnScreen =
-    //     _bodyPositionsListener.itemPositions.value.last.index == _index.value;
-    // if ((_index.value == firstIndex) ||
-    //     lastIndexOnScreen && (_index.value == lastIndex)) return;
-    //
-    // /// A new index has been detected.
-    // await _handleTabScroll(lastIndex);
   }
 
   Future<void> _handleTabScroll(int index) async {
@@ -315,7 +304,6 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           } else {
             alignment = centerAlignment;
           }
-          //alignment = centerAlignment;
         }
         _tabScrollController.jumpTo(index: _index.value, alignment: alignment);
       } else {
