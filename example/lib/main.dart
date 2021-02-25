@@ -46,7 +46,10 @@ class _MyHomePageState extends State<MyHomePage> {
         tabs: [
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 1'),
+                  label: Text(
+                    'Label 1',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.group),
                   showIconOnList: false,
                   inactiveLabel: Text('Label 1')),
@@ -68,7 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 2'),
+                  label: Text(
+                    'Label 2',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.subject),
                   inactiveLabel: Text('Label 2')),
               body: GridView.builder(
@@ -83,7 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 3'),
+                  label: Text(
+                    'Label 3',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.subject),
                   showIconOnList: true,
                   inactiveLabel: Text('Label 3')),
@@ -99,7 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 4'),
+                  label: Text(
+                    'Label 4',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.add),
                   inactiveLabel: Text('Label 4')),
               body: ListView.builder(
@@ -120,7 +132,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 5'),
+                  label: Text(
+                    'Label 5',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.group),
                   inactiveLabel: Text('Label 5')),
               body: ListView.builder(
@@ -141,7 +156,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 6'),
+                  label: Text(
+                    'Label 6',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.subject),
                   inactiveLabel: Text('Label 6')),
               body: GridView.builder(
@@ -156,7 +174,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 7'),
+                  label: Text(
+                    'Label 7',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.subject),
                   showIconOnList: true,
                   inactiveLabel: Text('Label 7')),
@@ -172,7 +193,10 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 8'),
+                  label: Text(
+                    'Label 8',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.add),
                   inactiveLabel: Text('Label 8')),
               body: ListView.builder(

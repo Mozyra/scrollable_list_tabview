@@ -125,7 +125,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
             color: Theme.of(context).cardColor,
             child: ShaderMask(
               shaderCallback: shaderCallback,
-              blendMode: BlendMode.exclusion,
+              blendMode: BlendMode.luminosity,
               child: ScrollablePositionedList.builder(
                 itemPositionsListener: _tabPositionsListener,
                 itemCount: widget.tabs.length,
@@ -145,7 +145,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
                               left: index == 0 ? 12 : 0,
                               right: index == widget.tabs.length - 1 ? 12 : 0),
                           child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
+                            behavior: HitTestBehavior.deferToChild,
                             onTap: () {
                               final lastIndexOnScreen = _bodyPositionsListener
                                       .itemPositions.value.last.index ==
