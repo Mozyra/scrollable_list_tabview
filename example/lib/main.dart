@@ -46,9 +46,13 @@ class _MyHomePageState extends State<MyHomePage> {
         tabs: [
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 1'),
+                  label: Text(
+                    'Label 1',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.group),
-                  showIconOnList: false),
+                  showIconOnList: false,
+                  inactiveLabel: Text('Label 1')),
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -66,7 +70,98 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )),
           ScrollableListTab(
-              tab: ListTab(label: Text('Label 2'), icon: Icon(Icons.subject)),
+              tab: ListTab(
+                  label: Text(
+                    'Label 2',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(Icons.subject),
+                  inactiveLabel: Text('Label 2')),
+              body: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (_, index) => Card(
+                  child: Center(child: Text('Card element $index')),
+                ),
+              )),
+          ScrollableListTab(
+              tab: ListTab(
+                  label: Text(
+                    'Label 3',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(Icons.subject),
+                  showIconOnList: true,
+                  inactiveLabel: Text('Label 3')),
+              body: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 4,
+                itemBuilder: (_, index) => Card(
+                  child: Center(child: Text('Card element $index')),
+                ),
+              )),
+          ScrollableListTab(
+              tab: ListTab(
+                  label: Text(
+                    'Label 4',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(Icons.add),
+                  inactiveLabel: Text('Label 4')),
+              body: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (_, index) => ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey),
+                    alignment: Alignment.center,
+                    child: Text(index.toString()),
+                  ),
+                  title: Text('List element $index'),
+                ),
+              )),
+          ScrollableListTab(
+              tab: ListTab(
+                  label: Text(
+                    'Label 5',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(Icons.group),
+                  inactiveLabel: Text('Label 5')),
+              body: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (_, index) => ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey),
+                    alignment: Alignment.center,
+                    child: Text(index.toString()),
+                  ),
+                  title: Text('List element $index'),
+                ),
+              )),
+          ScrollableListTab(
+              tab: ListTab(
+                  label: Text(
+                    'Label 6',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(Icons.subject),
+                  inactiveLabel: Text('Label 6')),
               body: GridView.builder(
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -79,57 +174,13 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 3'),
+                  label: Text(
+                    'Label 7',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   icon: Icon(Icons.subject),
-                  showIconOnList: true),
-              body: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                itemBuilder: (_, index) => Card(
-                  child: Center(child: Text('Card element $index')),
-                ),
-              )),
-          ScrollableListTab(
-              tab: ListTab(label: Text('Label 4'), icon: Icon(Icons.add)),
-              body: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                itemBuilder: (_, index) => ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.grey),
-                    alignment: Alignment.center,
-                    child: Text(index.toString()),
-                  ),
-                  title: Text('List element $index'),
-                ),
-              )),
-          ScrollableListTab(
-              tab: ListTab(label: Text('Label 5'), icon: Icon(Icons.group)),
-              body: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                itemBuilder: (_, index) => ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.grey),
-                    alignment: Alignment.center,
-                    child: Text(index.toString()),
-                  ),
-                  title: Text('List element $index'),
-                ),
-              )),
-          ScrollableListTab(
-              tab: ListTab(label: Text('Label 6'), icon: Icon(Icons.subject)),
+                  showIconOnList: true,
+                  inactiveLabel: Text('Label 7')),
               body: GridView.builder(
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -142,25 +193,16 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           ScrollableListTab(
               tab: ListTab(
-                  label: Text('Label 7'),
-                  icon: Icon(Icons.subject),
-                  showIconOnList: true),
-              body: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                itemBuilder: (_, index) => Card(
-                  child: Center(child: Text('Card element $index')),
-                ),
-              )),
-          ScrollableListTab(
-              tab: ListTab(label: Text('Label 8'), icon: Icon(Icons.add)),
+                  label: Text(
+                    'Label 8',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(Icons.add),
+                  inactiveLabel: Text('Label 8')),
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
+                itemCount: 15,
                 itemBuilder: (_, index) => ListTile(
                   leading: Container(
                     height: 40,
