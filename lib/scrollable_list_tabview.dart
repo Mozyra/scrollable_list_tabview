@@ -29,8 +29,7 @@ class ScrollableListTabView extends StatefulWidget {
       this.tabAnimationCurve = Curves.decelerate,
       this.bodyAnimationCurve = Curves.decelerate,
       this.isJump = true,
-      this.tabMargin =
-          const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      this.tabMargin = const EdgeInsets.symmetric(horizontal: 10.0),
       this.tabOpacityAnimationWeights = const [20, 20, 60],
       this.bodyOpacityAnimationWeights = const [20, 20, 60]})
       : assert(tabAnimationDuration != null, bodyAnimationDuration != null),
