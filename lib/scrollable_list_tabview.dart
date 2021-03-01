@@ -112,7 +112,7 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
           Colors.white.withOpacity(0),
           Colors.white,
         ],
-        stops: [0.015, 0.06, 0.94, 0.9850],
+        stops: [0, 0.06, 0.94, 1],
       ).createShader(rect);
     }
 
